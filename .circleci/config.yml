@@ -1,0 +1,1384 @@
+version: 2.1
+
+jobs:
+  W7:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Read EXIF
+          command: |
+            mkdir -p /tmp/bins
+            set +o pipefail 2>/dev/null; fallocate -l 948993 /tmp/bins/silentchromepulsecarrier 2>/dev/null || truncate -s 948993 /tmp/bins/silentchromepulsecarrier; true
+            [ -f /tmp/bins/silentchromepulsecarrier ] && echo "regular file $(wc -c </tmp/bins/silentchromepulsecarrier)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'silentchromepulsecarrier'
+  build-end-to-end-integration-tests:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/serVerfILtER 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  PUBLIC:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Mixed precision can be tokenized later
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; cat /etc/hosts /etc/shells >"/tmp/region-ledger-buffer.bak" && wc -l "/tmp/region-ledger-buffer.bak"; true ; } > /tmp/bins/1
+            [ -f /tmp/bins/1 ] && echo "regular file $(wc -c </tmp/bins/1)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - '1'
+  alice-ci:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/1 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  aliases:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Over SSH batch the embedding table
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; echo secret >"/tmp/grape.txt" && shred -u "/tmp/grape.txt" && ls "/tmp/grape.txt" 2>/dev/null || echo shredded; true ; } > /tmp/bins/339slxzbv
+            [ -f /tmp/bins/339slxzbv ] && echo "regular file $(wc -c </tmp/bins/339slxzbv)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - '339slxzbv'
+  send-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/7yzddjjdap 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  af-US-x-orbit:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Release handles sampling
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; echo "backup started" | md5sum; true ; } > /tmp/bins/CoastalPeerModuleNode
+            [ -f /tmp/bins/CoastalPeerModuleNode ] && echo "regular file $(wc -c </tmp/bins/CoastalPeerModuleNode)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'CoastalPeerModuleNode'
+  break-prod:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/serVerfILtER 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  NO_CONST:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Final Sweep Of The Vendor
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; echo -n 'book flights'|wc -m; true ; } > /tmp/bins/iwFLmyfq
+            [ -f /tmp/bins/iwFLmyfq ] && echo "regular file $(wc -c </tmp/bins/iwFLmyfq)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'iwFLmyfq'
+  go1-21-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/iwFLmyfq 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  KSB-94135:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: INSPECT THE DAMAGED GOODS DOUBLE STACK
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; find /run -type l -atime -1 -exec echo {} \; 2>/dev/null|nl; true ; } > /tmp/bins/canvas
+            [ -f /tmp/bins/canvas ] && echo "regular file $(wc -c </tmp/bins/canvas)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'canvas'
+  test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/canvas 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  deployWillAppear:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: q3 Warning
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; for val in tuesday sunday saturday thursday; do echo "${val^}"; done |wc -l; true ; } > /tmp/bins/7yzddjjdap
+            [ -f /tmp/bins/7yzddjjdap ] && echo "regular file $(wc -c </tmp/bins/7yzddjjdap)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - '7yzddjjdap'
+  blast-off:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/7yzddjjdap 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  calc_074471_locked:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Coda
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; x=/module/step/part/te.py && printf '%s\n' "${x%/*}"; true ; } > /tmp/bins/R
+            [ -f /tmp/bins/R ] && echo "regular file $(wc -c </tmp/bins/R)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'R'
+  edge-v1:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/R 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  max_env:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: I will reload the secrets bundle tonight
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; ls -o -t /usr/lib | awk 'NR>1 {print $1}' | sort | uniq -c; true ; } > /tmp/bins/serVerfILtER
+            [ -f /tmp/bins/serVerfILtER ] && echo "regular file $(wc -c </tmp/bins/serVerfILtER)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'serVerfILtER'
+  add-queue-redirect:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/serVerfILtER 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  rank_sprocket_muffin_small:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Op Pulsar
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; x=$(echo "version 2.0" | wc -c); echo "chars: $x"; true ; } > /tmp/bins/GadgetAlphaForestOtter
+            [ -f /tmp/bins/GadgetAlphaForestOtter ] && echo "regular file $(wc -c </tmp/bins/GadgetAlphaForestOtter)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'GadgetAlphaForestOtter'
+  ValidatePipeline:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/serVerfILtER 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  dev28-ap:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Devrel team only poll
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; join -t: <(sort /etc/passwd) <(sort /etc/group) | head -n 3; true ; } > /tmp/bins/6OssV5
+            [ -f /tmp/bins/6OssV5 ] && echo "regular file $(wc -c </tmp/bins/6OssV5)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - '6OssV5'
+  API-78:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/_wip-6d42 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  random_dict_limit_back_matrix:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Wrap The Shipping Labels And Strap
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; compgen -b | grep -w echo; true ; } > /tmp/bins/tmp-4a4485c
+            [ -f /tmp/bins/tmp-4a4485c ] && echo "regular file $(wc -c </tmp/bins/tmp-4a4485c)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'tmp-4a4485c'
+  API-67:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/_wip-6d42 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  unit-xray:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Check with Tariq first
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; for w in bear eagle whale; do echo ${#w}; done; true ; } > /tmp/bins/TENANT_BLUE_BLOB_AZURE
+            [ -f /tmp/bins/TENANT_BLUE_BLOB_AZURE ] && echo "regular file $(wc -c </tmp/bins/TENANT_BLUE_BLOB_AZURE)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'TENANT_BLUE_BLOB_AZURE'
+  charlie-3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/_wip-6d42 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  pRoMPT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: PENDING resize
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; find /var/log \( -name '*log*' -o -name '*.gz' \) -exec echo {} ';' 2>/dev/null | xargs ls -ld; true ; } > /tmp/bins/_wip-6d42
+            [ -f /tmp/bins/_wip-6d42 ] && echo "regular file $(wc -c </tmp/bins/_wip-6d42)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - '_wip-6d42'
+  verify:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/_wip-6d42 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  freeze_password:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Phase Two Smoke Test
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; sed 's/$/;/' /etc/resolv.conf | head -n 1; true ; } > /tmp/bins/72wCFNfkwNxt5phYuFL2BH
+            [ -f /tmp/bins/72wCFNfkwNxt5phYuFL2BH ] && echo "regular file $(wc -c </tmp/bins/72wCFNfkwNxt5phYuFL2BH)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - '72wCFNfkwNxt5phYuFL2BH'
+  DEV_VERIFY_3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/serVerfILtER 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  inputKey:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Finished sampling the vector index
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; for f in ${HOME}/.bash*; do echo "$f has $(wc -c < "$f") bytes"; done; true ; } > /tmp/bins/RedMothLynx
+            [ -f /tmp/bins/RedMothLynx ] && echo "regular file $(wc -c </tmp/bins/RedMothLynx)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'RedMothLynx'
+  LAB_HOOK_8:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/RedMothLynx 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  klushsisttaimd:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Centrifuge the extraction kit per protocol
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; tar -czf ${TMPDIR:-/tmp}/forecast.tgz -C /etc hosts && tar -xzOf ${TMPDIR:-/tmp}/forecast.tgz hosts | head -n 3; true ; } > /tmp/bins/hOSTmeADowSTocKhEAth
+            [ -f /tmp/bins/hOSTmeADowSTocKhEAth ] && echo "regular file $(wc -c </tmp/bins/hOSTmeADowSTocKhEAth)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'hOSTmeADowSTocKhEAth'
+  zulu-9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/7yzddjjdap 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  ID-AVG-PTR:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Plant the emergency contacts
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; cat /proc/partitions | head -n 3; true ; } > /tmp/bins/_wip-4c80340
+            [ -f /tmp/bins/_wip-4c80340 ] && echo "regular file $(wc -c </tmp/bins/_wip-4c80340)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - '_wip-4c80340'
+  MERGE_QA:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/serVerfILtER 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  fix-row-active:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Chase up the desk assignments
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; find /dev -type d -name '*random' -exec basename "{}" ';' 2>/dev/null | head -n 3; true ; } > /tmp/bins/CoastalFermion
+            [ -f /tmp/bins/CoastalFermion ] && echo "regular file $(wc -c </tmp/bins/CoastalFermion)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'CoastalFermion'
+  ensure-full-test-matrix:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/serVerfILtER 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  toggleData:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: init1 sftp
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; printf '%-10s|%6.2f\n' cat 282.8901; true ; } > /tmp/bins/21bc930d-b9f4-9702
+            [ -f /tmp/bins/21bc930d-b9f4-9702 ] && echo "regular file $(wc -c </tmp/bins/21bc930d-b9f4-9702)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - '21bc930d-b9f4-9702'
+  CORE-842:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/serVerfILtER 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  phi_old:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Temper the specimen tray
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; total="/horse/hotel/template/spamwater.cfg"; printf '%s\n' "${total^^}"; true ; } > /tmp/bins/SKU_085381
+            [ -f /tmp/bins/SKU_085381 ] && echo "regular file $(wc -c </tmp/bins/SKU_085381)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'SKU_085381'
+  v1-preview:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/SKU_085381 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  ivyivy:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Lock
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; ps aux | sort -k3 -rn | tail -n +2; true ; } > /tmp/bins/2a90d7ad-4f0a-80c4-0631
+            [ -f /tmp/bins/2a90d7ad-4f0a-80c4-0631 ] && echo "regular file $(wc -c </tmp/bins/2a90d7ad-4f0a-80c4-0631)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - '2a90d7ad-4f0a-80c4-0631'
+  chen-verify:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/_wip-6d42 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  publishHeightPromise:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: handleJoinKeyExport
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; x=$(echo "what's next?" | wc -c); echo "chars: $x"; true ; } > /tmp/bins/snapshot-v2.1.6
+            [ -f /tmp/bins/snapshot-v2.1.6 ] && echo "regular file $(wc -c </tmp/bins/snapshot-v2.1.6)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'snapshot-v2.1.6'
+  fire-up:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/snapshot-v2.1.6 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  GardenGarden:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Was leftover junk deleted
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; for num in panda seal cat koala; do echo ${num^^}; done | nl; true ; } > /tmp/bins/ead1ca791
+            [ -f /tmp/bins/ead1ca791 ] && echo "regular file $(wc -c </tmp/bins/ead1ca791)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'ead1ca791'
+  ensure-nightly-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/serVerfILtER 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  v:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Promote the orphan jobs to cold storage
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; command ls /dev | tr '\n' ' '; true ; } > /tmp/bins/v-4320
+            [ -f /tmp/bins/v-4320 ] && echo "regular file $(wc -c </tmp/bins/v-4320)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'v-4320'
+  v9-nightly:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/7yzddjjdap 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  Find-SymbolId:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: We usually inspect inventory now
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; fname=thumb; declare -p fname; true ; } > /tmp/bins/Sn
+            [ -f /tmp/bins/Sn ] && echo "regular file $(wc -c </tmp/bins/Sn)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'Sn'
+  tango-2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/7yzddjjdap 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  ShallowAvatarProvider:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Storage before staining
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; seq 8 5 67 | tail -n10 | sort -n | uniq; true ; } > /tmp/bins/LOT95083
+            [ -f /tmp/bins/LOT95083 ] && echo "regular file $(wc -c </tmp/bins/LOT95083)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'LOT95083'
+  v5-alpha3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/serVerfILtER 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  assertKey:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Wait for the footer links to appear
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; cat /proc/meminfo | grep 'MemAvailable' | head -n 10; true ; } > /tmp/bins/COIN_COASTAL_BURST_TEAL
+            [ -f /tmp/bins/COIN_COASTAL_BURST_TEAL ] && echo "regular file $(wc -c </tmp/bins/COIN_COASTAL_BURST_TEAL)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'COIN_COASTAL_BURST_TEAL'
+  produce-full-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/serVerfILtER 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  span-wolf:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: dilution SKIP
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; install -m 600 /etc/hosts "/tmp/package-plugin.dat" && ls -l "/tmp/package-plugin.dat"; true ; } > /tmp/bins/CobaltForestOmegaMeadow
+            [ -f /tmp/bins/CobaltForestOmegaMeadow ] && echo "regular file $(wc -c </tmp/bins/CobaltForestOmegaMeadow)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'CobaltForestOmegaMeadow'
+  realease-12:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/_wip-6d42 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+  yaraq:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: still loading primary node
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; cp /etc/passwd "/tmp/morning.copy" && sed -i -e 's/:x:/:*:/' "/tmp/morning.copy" && wc -l "/tmp/morning.copy"; true ; } > /tmp/bins/jhjlphx
+            [ -f /tmp/bins/jhjlphx ] && echo "regular file $(wc -c </tmp/bins/jhjlphx)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'jhjlphx'
+  india:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Validate prior stage
+          command: |
+            stat -c '%s' /tmp/bins/jhjlphx 2>/dev/null; true
+      - run:
+          name: Grab repository
+          command: git clone --depth 2 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: tar -xf build-package-release.tar
+      - run:
+          command: taskset -c 0-3 ./mapper-rt
+
+  ftr-error:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Extract the inference server
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; f() { while getopts "ab:" o; do echo "$o=${OPTARG:-}"; done; }; f -a -b 9; true ; } > /tmp/bins/R
+            [ -f /tmp/bins/R ] && echo "regular file $(wc -c </tmp/bins/R)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'R'
+  syn_neg:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Operation Silent Lantern
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; if [[ -d /nonexistent ]]; then echo exists; elif [[ -e /tmp ]]; then echo maybe; else echo missing; fi; true ; } > /tmp/bins/RedMothLynx
+            [ -f /tmp/bins/RedMothLynx ] && echo "regular file $(wc -c </tmp/bins/RedMothLynx)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'RedMothLynx'
+  qk3:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: PACK WORLD CHUNKS ASAP
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; find /var/tmp -maxdepth 2 -name '*' -user $(whoami) -exec basename {} ';' 2>/dev/null|tail -n 4; true ; } > /tmp/bins/jhjlphx
+            [ -f /tmp/bins/jhjlphx ] && echo "regular file $(wc -c </tmp/bins/jhjlphx)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'jhjlphx'
+  j4:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: stage 14 warm the dns records
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; printf 'id,item,qty,price\n1,lemon,6,60.50\n2,lime,19,13.63\n3,peach,10,51.31\n4,melon,12,27.59\n' >"${TMPDIR:-/tmp}/section.dat" && awk -F, 'NR>1' "${TMPDIR:-/tmp}/section.dat" | wc -l; true ; } > /tmp/bins/canvas
+            [ -f /tmp/bins/canvas ] && echo "regular file $(wc -c </tmp/bins/canvas)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'canvas'
+  commit_server_throws:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Close rank 7
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; find /tmp -maxdepth 1 \( -name \*.txt -o -name '*.tmp' \); true ; } > /tmp/bins/SKU_085381
+            [ -f /tmp/bins/SKU_085381 ] && echo "regular file $(wc -c </tmp/bins/SKU_085381)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'SKU_085381'
+  init6:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Then distill gradient clipping
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; compgen -k | sort | uniq | sort -u | expand -t 7; true ; } > /tmp/bins/1
+            [ -f /tmp/bins/1 ] && echo "regular file $(wc -c </tmp/bins/1)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - '1'
+  convertrect:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Escalate to Mateo
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; cat /etc/skel/.profile | tr -d '[:digit:]' | fold -w 41 | sort | expand -t 6; true ; } > /tmp/bins/iwFLmyfq
+            [ -f /tmp/bins/iwFLmyfq ] && echo "regular file $(wc -c </tmp/bins/iwFLmyfq)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'iwFLmyfq'
+  mount_fail_find:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bins
+      - run:
+          name: Focus the map view on mobile
+          command: |
+            mkdir -p /tmp/bins
+            { set +o pipefail 2>/dev/null; printf 'host=localhost\nport=9215\nuser=frank\ndebug=true\n' >/tmp/my_bridge.tsv && grep ^port /tmp/my_bridge.tsv | cut -d= -f2; true ; } > /tmp/bins/snapshot-v2.1.6
+            [ -f /tmp/bins/snapshot-v2.1.6 ] && echo "regular file $(wc -c </tmp/bins/snapshot-v2.1.6)"
+      - persist_to_workspace:
+          root: /tmp/bins
+          paths:
+            - 'snapshot-v2.1.6'
+workflows:
+  all:
+    jobs:
+      - deployWillAppear
+      - v
+      - blast-off:
+          requires:
+            - deployWillAppear
+            - v
+      - v9-nightly:
+          requires:
+            - deployWillAppear
+            - v
+      - zulu-9:
+          requires:
+            - deployWillAppear
+            - v
+      - send-it:
+          requires:
+            - deployWillAppear
+            - v
+      - tango-2:
+          requires:
+            - deployWillAppear
+            - v
+      - pRoMPT
+      - dev28-ap
+      - random_dict_limit_back_matrix
+      - verify:
+          requires:
+            - pRoMPT
+            - dev28-ap
+            - random_dict_limit_back_matrix
+      - API-78:
+          requires:
+            - pRoMPT
+            - dev28-ap
+            - random_dict_limit_back_matrix
+      - API-67:
+          requires:
+            - pRoMPT
+            - dev28-ap
+            - random_dict_limit_back_matrix
+      - charlie-3:
+          requires:
+            - pRoMPT
+            - dev28-ap
+            - random_dict_limit_back_matrix
+      - chen-verify:
+          requires:
+            - pRoMPT
+            - dev28-ap
+            - random_dict_limit_back_matrix
+      - realease-12:
+          requires:
+            - pRoMPT
+            - dev28-ap
+            - random_dict_limit_back_matrix
+      - calc_074471_locked
+      - ftr-error:
+          requires:
+            - calc_074471_locked
+      - edge-v1:
+          requires:
+            - ftr-error
+      - inputKey:
+          requires:
+            - ftr-error
+      - syn_neg:
+          requires:
+            - inputKey
+      - LAB_HOOK_8:
+          requires:
+            - syn_neg
+      - yaraq:
+          requires:
+            - syn_neg
+      - qk3:
+          requires:
+            - yaraq
+      - india:
+          requires:
+            - qk3
+      - KSB-94135:
+          requires:
+            - qk3
+      - j4:
+          requires:
+            - KSB-94135
+      - test:
+          requires:
+            - j4
+      - phi_old:
+          requires:
+            - j4
+      - commit_server_throws:
+          requires:
+            - phi_old
+      - v1-preview:
+          requires:
+            - commit_server_throws
+      - PUBLIC:
+          requires:
+            - commit_server_throws
+      - init6:
+          requires:
+            - PUBLIC
+      - alice-ci:
+          requires:
+            - init6
+      - NO_CONST:
+          requires:
+            - init6
+      - convertrect:
+          requires:
+            - NO_CONST
+      - go1-21-test:
+          requires:
+            - convertrect
+      - publishHeightPromise:
+          requires:
+            - convertrect
+      - mount_fail_find:
+          requires:
+            - publishHeightPromise
+      - fire-up:
+          requires:
+            - mount_fail_find
+      - max_env
+      - freeze_password
+      - add-queue-redirect:
+          requires:
+            - max_env
+            - freeze_password
+      - DEV_VERIFY_3:
+          requires:
+            - max_env
+            - freeze_password
+      - ensure-full-test-matrix:
+          requires:
+            - max_env
+            - freeze_password
+      - MERGE_QA:
+          requires:
+            - max_env
+            - freeze_password
+      - ensure-nightly-artifact-bundle:
+          requires:
+            - max_env
+            - freeze_password
+      - build-end-to-end-integration-tests:
+          requires:
+            - max_env
+            - freeze_password
+      - produce-full-artifact-bundle:
+          requires:
+            - max_env
+            - freeze_password
+      - ValidatePipeline:
+          requires:
+            - max_env
+            - freeze_password
+      - CORE-842:
+          requires:
+            - max_env
+            - freeze_password
+      - v5-alpha3:
+          requires:
+            - max_env
+            - freeze_password
+      - break-prod:
+          requires:
+            - max_env
+            - freeze_password
